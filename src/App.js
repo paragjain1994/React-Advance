@@ -8,8 +8,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [stop, setStop] = useState(null);
-  
-
 
   async function fetchMoviesHandler() {
     setIsLoading(true);
@@ -41,7 +39,7 @@ function App() {
   }
 
   const stopFetching = () => {
-    console.log('Stopped')
+    console.log("Stopped");
     clearInterval(stop);
   };
 
@@ -64,8 +62,9 @@ function App() {
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
-      <section>{content}
-      {error && <button onClick={stopFetching}>Stop</button>}
+      <section>
+        {content}
+        {error && <button onClick={stopFetching}>Stop</button>}
       </section>
     </React.Fragment>
   );
