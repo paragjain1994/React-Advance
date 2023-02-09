@@ -7,12 +7,15 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [stop, setStop] = useState(null);
+  
+
 
   async function fetchMoviesHandler() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://swapi.dev/api/films/");
+      const response = await fetch("https://swapi.dev/api/film/");
       if (!response.ok) {
         throw new Error("Something went wrong!");
       }
@@ -29,9 +32,18 @@ function App() {
       setMovies(transformedMovies);
     } catch (error) {
       setError(error.message);
+      const cleanInterval = setInterval(async () => {
+        await fetch("https://swapi.dev/api/film/");
+      }, 5000);
+      setStop(cleanInterval);
     }
     setIsLoading(false);
   }
+
+  const stopFetching = () => {
+    console.log('Stopped')
+    clearInterval(stop);
+  };
 
   let content = <p>Found no movies.</p>;
 
@@ -52,7 +64,9 @@ function App() {
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
-      <section>{content}</section>
+      <section>{content}
+      {error && <button onClick={stopFetching}>Stop</button>}
+      </section>
     </React.Fragment>
   );
 }
