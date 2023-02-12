@@ -63,6 +63,7 @@ function App() {
     console.log(data);
   }
 
+
   const stopFetching = () => {
     console.log("Stopped");
     clearInterval(stop);
